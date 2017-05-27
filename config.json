@@ -1,0 +1,20 @@
+{
+    "prefix": "!",
+	"mentionspam_cooldown": 30000,
+    "linkspam_cooldown": 600,
+    "linkwarn_limit": 2,
+    "linkkick_limit": 4,
+    "join_alert": true,
+    "leave_alert": true,
+    "update_alert": false,
+    "msg_cooldown": 180000,
+    "logperiod": 0,
+    "bot_channel": "301231109809897473",
+    "quoteusers": [
+        "222385754167312384",
+        "108090007117438976",
+        "218101207523262474",
+        "130750902712664065",
+        "300074782328750080"
+    ]
+}

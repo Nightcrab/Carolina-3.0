@@ -1,0 +1,395 @@
+{
+    "msgblacklist": [],
+    "alts": [
+        "carolinabot",
+        "flutterbot",
+        "<@316778893535346701>",
+		"@Carolina 3.0#2878",
+		"@Carolina 3.0",
+        "carolina"
+    ],
+    "redvblue_quotes": {
+        "tucker": [
+            {
+                "quote": "Bow chicka bow wow",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "...What, like a puma?",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "Well, what do the alien chicks look like?",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "Hey Tex, I bet it's been a while since you had some fresh meat!",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "But you guys think I'm your enemy, and I'm not preparing to do anything. Cept' get L.A.I.D.",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "Hey dude, do me a favor and don't talk like that when I'm playing with my thing.",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "Do you need a blanket? Tucker, do you want some hot dogs in a blanket?\" - Caboose \n\"Damn it, no, Caboose! I am NOT cold, I do not want a hot dog, and if you put mustard in my fucking sheets again, I am gonna kill you!",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "What the hell? Tex, have you gone crazy? If you wanna get with somebody, get with me! The love doctor! I'm a real man! I will rock your fucking world!",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "How come i never get to use the fuckin sniper rifle?",
+                "desc": "Tucker"
+            }
+        ],
+        "church": [
+            {
+                "quote": "CABOOSE!",
+                "desc": "Church"
+            },
+            {
+                "quote": "Does your society have any other adjectives besides great?",
+                "desc": "Church"
+            },
+            {
+                "quote": "Nope, no matter how bad they seem, they can't be any better, and they can't be any worse, because that's the way things fucking are, and you better get used to it Nancy. Quit yer bitching.",
+                "desc": "Church"
+            },
+            {
+                "quote": "What part? How 'bout the part where I got thrown eighty feet in the fucking air, by the god damn throwing thing!?",
+                "desc": "Church"
+            },
+            {
+                "quote": "Shut up, Caboose!",
+                "desc": "Church"
+            },
+            {
+                "quote": "Because girls can't share anything. Not even an apartment. Every time girls live together, within six months they all hate each other, and somebody gets stuck with a $1200 phone bill. That's fact.",
+                "desc": "Church"
+            },
+            {
+                "quote": "THIS IS FUCKING BULLSHIT!",
+                "desc": "Church"
+            },
+            {
+                "quote": "there's a very fine line between not listening and not caring. I like to think that I walk that line every day of my life.",
+                "desc": "Church"
+            }
+        ],
+        "tex": [
+            {
+                "quote": "I don't have treads, but I often find them staring at things they really shouldn't be.",
+                "desc": "Tex"
+            },
+            {
+                "quote": "Red base. Kill everyone.",
+                "desc": "Tex"
+            },
+            {
+                "quote": "Better luck next time, Carolina.",
+                "desc": "Tex"
+            }
+        ],
+        "caboose": [
+            {
+                "quote": "Command? Oh no, they never have good news. Did somebody die? Was it my mom, is she dead? Or my dad, did my dad die again? Oh no.",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "My name is Michael J. Caboose, and I. HATE. TAXES!",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Why are there six pedals if there are only four directions?",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Your toast has been burned and no amount of scraping will remove the black part.",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Do you need a blanket? Tucker, do you want some hot dogs in a blanket?\" - Caboose \n\"Damn it, no, Caboose! I am NOT cold, I do not want a hot dog, and if you put mustard in my fucking sheets again, I am gonna kill you!",
+                "desc": "Tucker"
+            },
+            {
+                "quote": "Not my fault. Someone put a wall in my way.",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Hello, I am Stupid Private Tucker. I am going to set off a big bomb now, and totally mess things up for everyone! Because I am stupid!",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "I do not think we are meshing artistically. I think you should talk to my agent.",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Hey chicka bum bum!",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "And Grif was in the backseat with a monkey.",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Never Go Backwards",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Tucker did it!",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Time line? Time isn't made out of lines! It is made out of circles. That is why clocks are round.",
+                "desc": "Caboose"
+            },
+            {
+                "quote": "Ctrl F+U",
+                "desc": "Caboose"
+            }
+        ],
+        "simmons": [
+            {
+                "quote": "Don't you think it's ironic that you're about to shoot us when we don't have enough ammo?",
+                "desc": "Simmons"
+            },
+            {
+                "quote": "SUCK IT BLACK! AND JUST TO CLARIFY, THAT WASN'T A RACE THING!",
+                "desc": "Simmons"
+            },
+            {
+                "quote": "What's 32 times 56?\" -Grif \"31,452.",
+                "desc": "Simmons"
+            },
+            {
+                "quote": "There's no such thing as \"Spanishland\", you retard...",
+                "desc": "Simmons"
+            }
+        ],
+        "grif": [
+            {
+                "quote": "Protect me cone!",
+                "desc": "Grif"
+            },
+            {
+                "quote": "It was definitely nuclear weapons, that's what did it. And the explosions caused massive power outages that caused the failsafe to fail, which released a super bacteria from a secret lab!",
+                "desc": "Grif theorising"
+            },
+            {
+                "quote": "Meh. Fuck it.",
+                "desc": "Grif"
+            },
+            {
+                "quote": "I had to move my lunch with the Pope, but he was cool with it. He owes me. I helped him pick the hat.",
+                "desc": "Grif"
+            },
+            {
+                "quote": "It's pink! Your armor is frickin' pink!",
+                "desc": "Grif"
+            },
+            {
+                "quote": "Big...tank...shooting! WHOOOO!",
+                "desc": "Grif"
+            }
+        ],
+        "sarge": [
+            {
+                "quote": "No, when he blows you up with a rocket, try to see if you can get your dismembered limbs and guts to clog the barrels of his rocket launcher.",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "Hey, Grif, hold these bullets for me ...IN YOUR GUT!",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "I hope you brought your wallet, 'cause the rent in hell gets paid in advance!",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "This is the best game since Grifball!",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "Simmons, I want you to poison Grif's next meal.",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "I've got a boner for murder!",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "Private Grif! You should be ashamed of yourself! We've run out of ammo again! That's *your* responsibility!",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "Can you put that in a memo and entitle it Shit I Already Know?",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "Jeez, there goes my last kidney! I was savin' that one for a special occasion!",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "You just got S- Ah, damn it! I messed up my one-liner!",
+                "desc": "Sarge"
+            },
+            {
+                "quote": "I've got a boner for murder!",
+                "desc": "Sarge"
+            }
+        ],
+        "donut": [
+            {
+                "quote": "Man, I've never found something that cool in a hole. And I've explored just about every hole you can think of!",
+                "desc": "Donut"
+            },
+            {
+                "quote": "You stole that thing all by yourself?\" -Sarge \"Yep, and then I ran over the guy that was chasing us. And a few other innocent pedestrians",
+                "desc": "Donut"
+            },
+            {
+                "quote": "Shotgun's lap!",
+                "desc": "Donut"
+            },
+            {
+                "quote": "There's six of us, and this is only a three-seater jeep. Half of us had to sit on someone else's lap.\" - Simmons \n\"It was a great road trip! My favorite part was when Grif tried to change gears, and he accidentally...",
+                "desc": "Donut"
+            }
+        ],
+        "sheila": [
+            {
+                "quote": "Firing main cannon.",
+                "desc": "Sheila"
+            }
+        ],
+        "washington": [
+            {
+                "quote": "That was the worst throw ever... of all time.",
+                "desc": "Wash"
+            },
+            {
+                "quote": "I am not a cop!",
+                "desc": "Washington"
+            },
+            {
+                "quote": "Good luck with your empty base and your raging insanity.",
+                "desc": "Washington"
+            }
+        ],
+        "sister": [
+            {
+                "quote": "I thought about having a kid once.\" - Sister\n\"Oh, really? It's a lot of work.\" - Tucker\n\"Yeah, it seems like it would be hard. But I thought, you know, who wants to be known as the girl who's had seven abortions?",
+                "desc": "Sister"
+            },
+            {
+                "quote": "Hey Tex! Stop shooting, you stupid bitch!",
+                "desc": "Sister"
+            },
+            {
+                "quote": "You can't overdose on aspirin! I've tried.",
+                "desc": "Sister"
+            },
+            {
+                "quote": "They say women can't ejaculate, but...",
+                "desc": "Sister"
+            },
+            {
+                "quote": "What's up, Sis? What'd you and Tex talk about?\" - Tucker\n\"Uh, she was just talking about everyone here, how you're all idiots and jerks, but you guys are her idiots and jerks, that if I tried to become more popular than her she would talk about me behind my back and turn everyone against me, and then I would cry and everybody would hate me. You know, girl stuff!",
+                "desc": "Sister"
+            },
+            {
+                "quote": "You have a kid that looks like a dog?",
+                "desc": "Sister"
+            },
+            {
+                "quote": "Eh, I'll be okay. Hard nipples won't kill you.",
+                "desc": "Sister"
+            },
+            {
+                "quote": "Yeah? Well they say girls can't ejaculate either! But guess what?",
+                "desc": "Sister"
+            }
+        ],
+        "lopez": [
+            {
+                "quote": "Pendejo.",
+                "desc": "Lopez"
+            }
+        ],
+        "doc": [
+            {
+                "quote": "Ohhh heyyy guys!",
+                "desc": "Doc"
+            }
+        ],
+        "kimball": [
+            {
+                "quote": "We are not *banging*!",
+                "desc": "Kimball"
+            }
+        ],
+        "psi": [
+            {
+                "quote": "I'm dumb",
+                "desc": "Psi"
+            },
+            {
+                "quote": "Gentlemen, and Rho, let's calm down.",
+                "desc": "Psi"
+            },
+            {
+                "quote": "/cal-hoon/ a weeb",
+                "desc": "Psi"
+            }
+        ],
+        "epsilon": [
+            {
+                "quote": "Guys...I'm an asshole",
+                "desc": "Epsilon"
+            }
+        ],
+        "banks": [
+            {
+                "quote": "Kimble",
+                "desc": "Banks"
+            },
+            {
+                "quote": "SHUT THE FUCK UP, PRIVATE",
+                "desc": "Banks"
+            },
+            {
+                "quote": "Jesus Fucking Christ, Private.",
+                "desc": "Banks"
+            }
+        ],
+        "carolina": [
+            {
+                "quote": "\"best freelancer ->\"",
+                "desc": "Carolina"
+            }
+        ],
+        "omega": [
+            {
+                "quote": "Mwahahahaha!",
+                "desc": "Omega"
+            }
+        ],
+        "omalley": [
+            {
+                "quote": "Mwahahahaha!",
+                "desc": "Omally"
+            }
+        ],
+        "felix": [
+            {
+                "quote": "Let the people person handle this.",
+                "desc": "Felix"
+            }
+        ]
+    }
+}
