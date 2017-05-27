@@ -3,7 +3,7 @@ const bot = new Discord.Client();
 
 var fs = require('fs');
 var settings = JSON.parse(fs.readFileSync('./config.json'));
-var data = 	JSON.parse(fs.readFileSync('./data.json'));
+var data = JSON.parse(fs.readFileSync('./data.json'));
 var prefix = settings.prefix;
 
 var lastquote = '';
@@ -49,13 +49,13 @@ var stopall = [false,null];
 var speech;
 var arguments;
 var namen;
-var	type;
+var type;
 var currentChannel;
 var messagelog = [{log:'',size:0,channel:'',guild:''}];
 
 function getName(args,position)
 {
-	if (args.length == position+1)
+        if (args.length == position+1)
 	{
 		return args[position];
 	}
