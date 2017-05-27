@@ -1,8 +1,8 @@
 {
-  "name": "paul",
+  "name": "celly",
   "version": "1.0.0",
   "description": "",
-  "main": "flutterbot03.js",
+  "main": "carolina03.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
