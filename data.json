@@ -4,9 +4,186 @@
         "carolinabot",
         "flutterbot",
         "<@316778893535346701>",
-		"@Carolina 3.0#2878",
-		"@Carolina 3.0",
+        "<@!316778893535346701>",
+        "@Carolina 3.0#2878",
+        "@Carolina 3.0",
         "carolina"
+    ],
+    "names": [
+        "Swamp Monster"
+    ],
+    "loot": [
+        {
+            "name": "strange gemstone",
+            "rarity": 1
+        },
+        {
+            "name": "sword upgrade",
+            "rarity": 2
+        },
+        {
+            "name": "armour upgrade",
+            "rarity": 2
+        },
+        {
+            "name": "exp token",
+            "rarity": 3
+        },
+        {
+            "name": "weapon part",
+            "rarity": 1
+        },
+        {
+            "name": "Psi's private movie collection",
+            "rarity": 5
+        }
+    ],
+    "fightchars": [
+       
+    ],
+    "weapons": [
+        {
+            "name": "rock",
+            "damage": [
+                5,
+                10
+            ],
+            "weight": 6,
+            "cost": 1,
+            "ranged": false
+        },
+        {
+            "name": "sword",
+            "damage": [
+                20,
+                50
+            ],
+            "weight": 10,
+            "cost": 3,
+            "ranged": false
+        },
+        {
+            "name": "bludgeon",
+            "damage": [
+                10,
+                60
+            ],
+            "weight": 18,
+            "cost": 2,
+            "ranged": false
+        },
+        {
+            "name": "dagger",
+            "damage": [
+                10,
+                50
+            ],
+            "weight": 2,
+            "penetration": 0.5,
+            "cost": 2,
+            "ranged": false
+        },
+        {
+            "name": "claymore",
+            "damage": [
+                30,
+                150
+            ],
+            "weight": 20,
+            "penetration": 0.5,
+            "cost": 6,
+            "ranged": true,
+            "range": 2
+        },
+        {
+            "name": "sword of awesomeness",
+            "damage": [
+                50,
+                200
+            ],
+            "weight": 10,
+            "cost": 8,
+            "ranged": false
+        },
+        {
+            "name": "longsword",
+            "damage": [
+                70,
+                110
+            ],
+            "weight": 18,
+            "cost": 6,
+            "ranged": false
+        },
+        {
+            "name": "iron spear",
+            "damage": [
+                80,
+                90
+            ],
+            "weight": 13,
+            "cost": 3,
+            "ranged": true,
+            "range": 2
+        },
+        {
+            "name": "brute shot",
+            "damage": [
+                50,
+                240
+            ],
+            "weight": 10,
+            "cost": 10,
+            "ranged": true,
+            "range": 15
+        }
+    ],
+    "armour": [
+        {
+            "name": "meta-suit",
+            "defense": 0.8,
+            "weight": 30
+        },
+        {
+            "name": "mail armour",
+            "defense": 0.35,
+            "weight": 14
+        },
+        {
+            "name": "paper armour",
+            "defense": 0.2,
+            "weight": 1
+        },
+        {
+            "name": "knight's plate-armour",
+            "defense": 0.85,
+            "weight": 30
+        },
+        {
+            "name": "padded armour",
+            "defense": 0.3,
+            "weight": 8
+        },
+        {
+            "name": "plate-armour",
+            "defense": 0.65,
+            "weight": 20
+        },
+        {
+            "name": "eco(deign)-friendly armour",
+            "defense": 0.75,
+            "weight": 20
+        },
+        {
+            "name": "super-armour",
+            "defense": 0.95,
+            "weight": 0
+        },
+        {
+            "name": "nothing",
+            "defense": 0,
+            "weight": 0
+        }
     ],
     "redvblue_quotes": {
         "tucker": [
@@ -78,6 +255,10 @@
             },
             {
                 "quote": "there's a very fine line between not listening and not caring. I like to think that I walk that line every day of my life.",
+                "desc": "Church"
+            },
+            {
+                "quote": "How 'bout the part where I got thrown eighty feet in the fucking air, by the God damn throwing thing?!",
                 "desc": "Church"
             }
         ],
@@ -241,6 +422,10 @@
             {
                 "quote": "I've got a boner for murder!",
                 "desc": "Sarge"
+            },
+            {
+                "quote": "HEAR THAT NUMBNUTS! I OUTRANK YOU! AGAIN! HA!",
+                "desc": "Sarge"
             }
         ],
         "donut": [
@@ -333,38 +518,10 @@
                 "desc": "Kimball"
             }
         ],
-        "psi": [
-            {
-                "quote": "I'm dumb",
-                "desc": "Psi"
-            },
-            {
-                "quote": "Gentlemen, and Rho, let's calm down.",
-                "desc": "Psi"
-            },
-            {
-                "quote": "/cal-hoon/ a weeb",
-                "desc": "Psi"
-            }
-        ],
         "epsilon": [
             {
                 "quote": "Guys...I'm an asshole",
                 "desc": "Epsilon"
-            }
-        ],
-        "banks": [
-            {
-                "quote": "Kimble",
-                "desc": "Banks"
-            },
-            {
-                "quote": "SHUT THE FUCK UP, PRIVATE",
-                "desc": "Banks"
-            },
-            {
-                "quote": "Jesus Fucking Christ, Private.",
-                "desc": "Banks"
             }
         ],
         "carolina": [
@@ -390,6 +547,85 @@
                 "quote": "Let the people person handle this.",
                 "desc": "Felix"
             }
+        ],
+        "locus": [
+            {
+                "quote": "How unfortunate.",
+                "desc": "Locus"
+            }
+        ],
+        "georgia": [
+            {
+                "quote": "Hi!",
+                "desc": "Georgia"
+            }
+        ],
+        "florida": [
+            {
+                "quote": "Pleased as punch you picked me, Captain",
+                "desc": "Florida"
+            }
+        ],
+        "counselor": [
+            {
+                "quote": "it appears we are taking fire.",
+                "desc": "Counselor"
+            }
+        ],
+        "director": [
+            {
+                "quote": "Allison!",
+                "desc": "Director"
+            }
+        ],
+        "smith": [
+            {
+                "quote": "Caboose is the wisest officer I've ever met.",
+                "desc": "Smith"
+            }
+        ],
+        "banks": [
+            {
+                "quote": "Kimble",
+                "desc": "Banks"
+            },
+            {
+                "quote": "Shut the fuck up, Private!",
+                "desc": "Banks"
+            }
+        ],
+        "how": [
+            {
+                "quote": "'bout the part where I got thrown eighty feet in the fucking air, by the God damn throwing thing?!",
+                "desc": "How"
+            }
+        ],
+        "maine": [
+            {
+                "quote": "Too high.",
+                "desc": "Maine"
+            }
+        ],
+        "meta": [
+            {
+                "quote": "*growling*",
+                "desc": "Meta"
+            }
+        ],
+        "reno": [
+            {
+                "quote": "You're all Dumbasses!",
+                "desc": "Reno"
+            }
+        ],
+        "ray": [
+            {
+                "quote": "I'm going back to my closet",
+                "desc": "Ray"
+            }
         ]
+    },
+    "server_quotes": {
+       
     }
 }
