@@ -3,7 +3,7 @@ const bot = new Discord.Client();
 
 var fs = require('fs');
 var settings = JSON.parse(fs.readFileSync('./config.json'));
-var data = JSON.parse(fs.readFileSync('./data.json'));
+var data = 	JSON.parse(fs.readFileSync('./data.json'));
 var prefix = settings.prefix;
 
 var lastquote = '';
@@ -12,7 +12,7 @@ var logid = 0;
 var replycheck = ['false','false','false'];
 var spamwatch =
 {
-	imgspam	:	[
+    imgspam	:	[
 		['author','time','images posted']
 	],
 	
@@ -49,13 +49,13 @@ var stopall = [false,null];
 var speech;
 var arguments;
 var namen;
-var type;
+var	type;
 var currentChannel;
 var messagelog = [{log:'',size:0,channel:'',guild:''}];
 
 function getName(args,position)
 {
-        if (args.length == position+1)
+	if (args.length == position+1)
 	{
 		return args[position];
 	}
@@ -218,7 +218,7 @@ var commandTable =
 				argus.shift();
 				if (argus < this.args)
 				{
-					currentChannel.send("Missing arguments: requires id and message");
+					currentChannel.send("Missing arguments: requires id/mention and message");
 					return;
 				}
 				arguments = argus;
@@ -243,7 +243,7 @@ var commandTable =
 					}
 				}
 				
-				bot.users.get(namen).send("``Someone sent you an anonymous message:``\n"+speech+"\n``You can disable these simply by telling me !togglemsgs``");
+				bot.users.get(namen).send("``Someone sent you an anonymous message:``\n"+speech+"\n``You can disable these simply by telling me "+settings.prefix+"togglemsgs``");
 				msg.delete();
 				console.log('sent message: '+speech);
 			}
@@ -523,12 +523,14 @@ var commandTable =
 				argus.shift();
 				
 				let character;
-				if (argus[0].toLowerCase() != "random") {character = data.redvblue_quotes[argus[0].toLowerCase()];} else {character = data.redvblue_quotes[randProp(data.redvblue_quotes)];}
+				if (argus[0].toLowerCase() != "random") {character = data.redvblue_quotes[argus[0].toLowerCase()];} 
+				else {character = data.redvblue_quotes[randProp(data.redvblue_quotes)];}
+				
 				console.log(character);
 				if (character == undefined) {currentChannel.send("Invalid character, did you mean Tucker?"); return;}
 				let quote = character[getRandomInt(0,character.length)];
 				
-				for (i=0;i<character.length;i++)
+				for (i=0;i<20;i++)
 				{
 					if (quote.quote == lastquote)
 					{
@@ -594,6 +596,89 @@ var commandTable =
 		},
 		
 		{
+			name	:	"serverquote",
+			desc	:	"Generates a random server quote.",
+			args	:	1,
+			reqmsg	:	true,
+			execute	:	function(argus,msg)
+			{
+				console.log("getting quote");
+				argus.shift();
+				
+				let character;
+				if (argus[0].toLowerCase() != "random") {character = data.server_quotes[argus[0].toLowerCase()];} 
+				else {character = data.server_quotes[randProp(data.server_quotes)];}
+				
+				console.log(character);
+				if (character == undefined) {currentChannel.send("Invalid character, did you mean Psi?"); return;}
+				let quote = character[getRandomInt(0,character.length)];
+				
+				for (i=0;i<20;i++)
+				{
+					if (quote.quote == lastquote)
+					{
+						let quote = character[getRandomInt(0,character.length)];
+						console.log("copy quote");
+					}
+					else
+					{
+						break;
+					}
+				}
+				
+				console.log(quote);
+				
+				currentChannel.send('"'+quote.quote+'" - '+quote.desc);
+				lastquote = quote.quote;
+			}
+		},
+		
+		{
+			name	:	"addserverquote",
+			desc	:	"Add a server quote.",
+			args	:	2,
+			reqmsg 	:	true,
+			execute	:	function(argus,msg)
+			{
+				let permitted = false;
+				for (var i in settings.quoteusers)
+				{
+					if (settings.quoteusers[i] == msg.author.id) {permitted = true; break;}
+				}
+				if (!permitted) {return;}
+				
+				argus.shift();
+				if (argus.length<2){return;}
+				
+				let newquote = getName(argus,1);
+				let character = argus[0].toLowerCase();
+				
+				if (!data.server_quotes[character])
+				{
+					data.server_quotes[character] = [];
+				}
+				for (var s in data.server_quotes)
+				{
+					for (var n in data.server_quotes[s])
+					{
+						if (removepunctuation(newquote.toLowerCase()) == removepunctuation(data.server_quotes[s][n].quote.toLowerCase()))
+						{
+							currentChannel.send("Quote already exists.");
+							return;
+						}
+					}
+				}
+				
+				data.server_quotes[character].push({quote:newquote,desc:capitalise(character)});
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
+				currentChannel.send("Added quote!");
+			}
+		},
+		
+		{
 			name	:	"showlog",
 			desc	:	"DMs you a specific log of the chat's messages",
 			args	:	1,
@@ -604,6 +689,543 @@ var commandTable =
 				let path = "./Log/"+msg.guild+"/"+argus[0]+"/"+argus[1]+".txt";
 				
 				msg.author.send({files:[path]});
+			}
+		},
+		
+		{
+			name 	:	"fight",
+			desc	:	"Engages either another user or a randomly generated opponent.",
+			args	:	1,
+			reqmsg	:	true,
+			execute	:	function(argus,msg)
+			{
+				argus.shift()
+				let char1;
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == msg.author.id)
+					{
+						char1 = data.fightchars[i];
+						break;
+					}
+				}
+				if (!char1) 
+				{
+					currentChannel.send("Could not find a pre-existing character belonging to you, creating one now...");
+					data.fightchars.push(newchar(msg.author)); char1 = data.fightchars[data.fightchars.length-1];
+				}
+					
+				let char2;
+				for (var i in data.fightchars)
+				{
+					if (argus[0] == "ai"){break;}
+					if (data.fightchars[i].user == mentiontouser(argus[0]).id)
+					{
+						char2 = data.fightchars[i];
+						break;
+					}
+				}
+				if (argus[0] == "ai")
+				{
+					char2 = randchar(char1);
+				}
+				
+				if (!char2){currentChannel.send("Could not find that opponent!");return;}
+				
+				console.log(argus[0] == "ai");
+				console.log(argus[0]);
+				let name2 = "";
+				if (argus[0] == "ai") {name2 = data.names[getRandomInt(0,data.names.length)];} else {name2 = bot.users.get(char2.user).username;}
+				
+				let victor;
+				let loser;
+				let turns = [];
+				let weapon1;
+				let weapon2;
+				
+				for (var i in data.weapons)
+				{
+					if (data.weapons[i].name == char1.weapon)
+					{
+						weapon1 = data.weapons[i];
+					}
+					if (data.weapons[i].name == char2.weapon)
+					{
+						weapon2 = data.weapons[i];
+					}
+					if (weapon1 && weapon2)
+					{
+						console.log("this works");
+						break;
+					}
+				}
+				let armour1;
+				let armour2;
+				for (var i in data.armour)
+				{
+					if (data.armour[i].name == char1.armour)
+					{
+						armour1 = data.armour[i];
+					}
+					if (data.armour[i].name == char2.armour)
+					{
+						armour2 = data.armour[i];
+					}
+					if (armour1 && armour2)
+					{
+						console.log("this works");
+						break;
+					}
+				}
+				currentChannel.send("The fight has begun between "+bot.users.get(char1.user).username+" and "+name2+"!");
+				if (char2.user == "ai")
+				{
+					currentChannel.send("This randomly generated enemy has a: "+char2.weapon+", "+char2.str+" strength, "+char2.def+" defense, and is wearing "+char2.armour+".")
+				}
+				
+				let damage;
+				let defense1 = 0;
+				let defense2 = 0;
+				char1.fhp = char1.hp;
+				char2.fhp = char2.hp;
+				for (i=0;i<char2.def;i++)
+				{
+					defense2 = defense2+Math.pow(1.5, -i)/4;
+				}
+				for (i=0;i<char1.def;i++)
+				{
+					defense1 = defense1+Math.pow(1.5, -i)/4;
+				}
+				
+				for (i=0;;i++)
+				{
+					if (i % 2 == 0)
+					{
+						damage = getRandomInt(weapon1.damage[0],weapon1.damage[1])+char1.str*2;
+						damage = damage-damage*armour2.defense;
+						if (defense2){damage = damage-damage*defense2;}
+						damage = Math.floor(damage);
+						char2.fhp = char2.fhp-damage;
+						turns.push(bot.users.get(char1.user).username+" used their "+char1.weapon+" to inflict "+damage+" damage!\n"+name2+" is down to "+char2.fhp+" HP.");
+					}
+					else
+					{
+						damage = getRandomInt(weapon2.damage[0],weapon2.damage[1])+char2.str*2;
+						console.log("initial "+damage);
+						console.log("defense "+defense1);
+						damage = damage-damage*armour1.defense;
+						if (defense1){damage = damage-damage*defense1;}
+						damage = Math.floor(damage);
+						console.log("after rounding "+damage);
+						char1.fhp = char1.fhp-damage;
+						turns.push(name2+" used their "+char2.weapon+" to inflict "+damage+" damage!\n"+bot.users.get(char1.user).username+" is down to "+char1.fhp+" HP.");
+					}
+					if (char2.fhp < 1)
+					{
+						victor = char1;
+						loser = char2;
+						break;
+					}
+					if (char1.fhp < 1)
+					{
+						victor = char2;
+						loser = char1;
+						break;
+					}
+				}
+				
+				var lastmsg = "test";
+				
+				//currentChannel.send(turns[0]).then(m => {lastmsg = m;});
+				
+				//console.log(lastmsg);
+				/*function announce(turn,msg)
+				{
+					console.log("msg: "+lastmsg.content);
+					console.log("msg in function: "+msg);
+					return function()
+					{
+						msg.edit(turns[turn]);
+					}
+				}
+				
+				for (i=0;i<turns.length;i++)
+				{
+					setTimeout(announce(i,lastmsg),2000);
+				}
+				*/
+				if (!argus[1]) {argus[1] = 'slow';}
+				if (argus[1].toLowerCase() != "instant")
+				{
+					for (i=0;i<turns.length-2;i++)
+					{
+						currentChannel.send(turns[i]).then(m => {m.delete(2000);});
+					}
+					for(i=turns.length-2;i<turns.length;i++)
+					{
+						currentChannel.send(turns[i]);
+					}
+				}
+				else
+				{
+					for(i=turns.length-2;i<turns.length;i++)
+					{
+						currentChannel.send(turns[i]);
+					}
+				}
+				
+				char1.fhp = char1.hp;
+				char2.fhp = char2.hp;
+				let exp = 10;//Math.floor(10*(loser.level+loser.exp/20)/(victor.level+victor.exp/20));
+				if (victor == char1)
+				{
+					currentChannel.send(bot.users.get(char1.user).username+" is the victor and gains "+exp+" EXP!");
+					char1.exp += exp;
+					char1.victories += 1;
+					char2.losses += 1;
+					
+					if (char2.user == "ai")
+					{
+						switch (getRandomInt(1,4))
+						{
+							case 1:
+								char1.inventory.push(char2.weapon);
+								currentChannel.send("The enemy's "+char2.weapon+" was added to your inventory!");
+								break;
+							case 2:
+								char1.inventory.push(char2.armour);
+								currentChannel.send("The enemy's "+char2.armour+" was added to your inventory!");
+								break;
+							case 3:
+								let loot = data.loot[getRandomInt(0, data.loot.length)];
+								char1.inventory.push(loot.name);
+								currentChannel.send("You found a "+loot.name+" on the enemy's body and it was added to your inventory!");
+								break;
+							case 4:
+								let wep = data.weapons[getRandomInt(0, data.weapons.length)];
+								char1.inventory.push(wep.name);
+								currentChannel.send("You found a "+wep.name+" on the enemy's body and it was added to your inventory!");
+								break;
+						}
+					}
+				}
+				else
+				{
+					currentChannel.send(name2+" is the victor and gains "+exp+" EXP!");
+					char2.exp += exp;
+					char2.victories += 1;
+					char1.losses += 1;
+					if (char2.user == "ai" && getRandomInt(0,3) == 2)
+					{
+						let loot = data.loot[getRandomInt(0, data.loot.length)];
+						char1.inventory.push(loot.name);
+						currentChannel.send("You found a "+loot.name+" after the battle and it was added to your inventory!");
+						
+					}
+				}
+				
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
+			}
+		},
+			
+		{
+			name	:	"showchar",
+			desc	:	"Displays a user's character info(for the fight command).",
+			args	:	1,
+			reqmsg	:	true,
+			execute	:	function(argus,msg)
+			{
+				argus.shift();
+				let user = mentiontouser(argus[0]);
+				let char;
+				console.log(user);
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == user.id)
+					{
+						char = data.fightchars[i];
+						break;
+					}
+				}
+				if (!char)
+				{
+					currentChannel.send("That user has no character.");
+					return;
+				}
+				let defense = 0;
+				for (i=0;i<char.def;i++)
+				{
+					defense = defense+Math.pow(1.5, -i)/4;
+				}
+				defense = Math.round(defense*100)/100;
+				let embed = new Discord.RichEmbed()
+				.setDescription("__Victories__: "+char.victories+"\n__Losses__: "+char.losses+"\n__Weapon__: "+char.weapon+"\n__Armour__: "+char.armour+"\n__Base Defense Rating(Damage Absorption)__: "+defense+"\n__Level__ :"+char.level+"\n__EXP__: "+char.exp)
+				.setTitle("Character info for user "+user.username)
+				.setColor(0x3366ff)
+				.setImage(user.displayAvatarURL);
+				
+				msg.channel.send({ embed });
+			}
+		},
+		{
+			name 	:	"equip",
+			desc	:	"Equips something from your character's inventory(fight command).",
+			args	:	1,
+			reqmsg	:	true,
+			execute	:	function(argus,msg)
+			{
+				argus.shift();
+				if (!argus[1]) {return;}
+				let char;
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == msg.author.id)
+					{
+						char = data.fightchars[i];
+						break;
+					}
+				}
+				if (!char){currentChannel.send("You do not have a character! type "+settings.prefix+"makecharacter to make one.");return;}
+				let item = getName(argus,1);
+				for (i=0;i<char.inventory.length;i++)
+				{
+					if (char.inventory[i] == item.toLowerCase())
+					{
+						console.log(char.inventory[i]+", "+item)
+						if (argus[0].toLowerCase() == "armour" || argus[0].toLowerCase() == "armor")
+						{
+							char.armour = char.inventory[i];
+							currentChannel.send("Equipped "+char.inventory[i]+"!");
+							return;
+						}
+						else if (argus[0].toLowerCase() == "weapon")
+						{
+							char.weapon = char.inventory[i];
+							currentChannel.send("Equipped "+char.inventory[i]+"!");
+							return;
+						}
+					}
+				}
+				
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
+			}
+		},
+		
+		{
+			name	:	"levelup",
+			desc	:	"Uses EXP points to increase your stats!",
+			args	:	1,
+			reqmsg	:	true,
+			execute	:	function(args,msg)
+			{
+				args.shift();
+				let char;
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == msg.author.id)
+					{
+						char = data.fightchars[i];
+						break;
+					}
+				}
+				
+				if (!char){currentChannel.send("You do not have a character! type "+settings.prefix+"makecharacter to make one.");return;}
+				let amount;
+				if (!args[1]){amount = 1;} else {amount = parseInt(args[1]);}
+				if (char.exp<20*amount){currentChannel.send("You do not have enough EXP to level up!");return;}
+				
+				
+				if (args[0].toLowerCase() == "defense")
+				{
+					char.def += amount;
+					char.exp -= 20*amount;
+					char.level += 1*amount;
+					msg.channel.send("Upgraded defense of "+msg.author.username+". Defense is now at "+char.def+".");
+				}
+				else if (args[0].toLowerCase() == "strength")
+				{
+					char.str += amount;
+					char.exp -= 20*amount;
+					char.level += 1*amount;
+					msg.channel.send("Upgraded strength of "+msg.author.username+". Strength is now at "+char.str+".");
+				}
+				else if (args[0].toLowerCase() == "health")
+				{
+					char.hp += 10*amount;
+					char.exp -= 20*amount;
+					char.level += 1*amount;
+					msg.channel.send("Upgraded hitpoints of "+msg.author.username+". Health is now at "+char.hp+".");
+				}
+				
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
+			}
+		},
+		
+		{
+			name	:	"make",
+			desc	:	"Create a weapon from parts(Fight command).",
+			args	:	1,
+			reqmsg	:	true,
+			execute	:	function(args,msg)
+			{
+				args.shift();
+				if (!args[0]){return;}
+				let char;
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == msg.author.id)
+					{
+						char = data.fightchars[i];
+						break;
+					}
+				}
+				if (!char){currentChannel.send("You do not have a character! type "+settings.prefix+"makecharacter to make one.");return;}
+				let weapon;
+				let weapon_name = getName(args, 0)
+				for (var i in data.weapons)
+				{
+					if (data.weapons[i].name == weapon_name)
+					{
+						weapon = data.weapons[i];
+						break;
+					}
+				}
+				let count = [];
+				
+				for (var i in char.inventory)
+				{
+					if (char.inventory[i] == "weapon part")
+					{
+						let newarray = char.inventory;
+						count.push(i);
+						newarray.splice(i,1);
+						for (var l in newarray)
+						{
+							if (newarray[l] == "weapon part")
+							{
+								count.push(l);
+							}
+						}
+						break;
+					}
+				}
+				let parts = "parts";
+				console.log("weapon parts: "+count.length);
+				if (weapon.cost == 1) {parts = "part";}
+				if (weapon.cost > count.length) {currentChannel.send("You do not have enough weapon parts - you need "+weapon.cost+" weapon "+parts+" to make a "+weapon.name+"!");return;}
+				for (i=0;i<weapon.cost;i++)
+				{
+					char.inventory.splice(count[i],1);
+				}
+				char.inventory.push(weapon.name);
+				currentChannel.send("You created a "+weapon.name+" and it was added to your inventory!");
+			}
+		},
+		
+		{
+			name	:	"scrap",
+			desc	:	"Converts a weapon/armour into weapon/armour parts(fight command).",
+			args	:	1,
+			reqmsg	:	true,
+			execute :	function(args,msg)
+			{
+				args.shift();
+				if (!args[0]){return;}
+				let char;
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == msg.author.id)
+					{
+						char = data.fightchars[i];
+						break;
+					}
+				}					
+				if (!char){currentChannel.send("You do not have a character! type "+settings.prefix+"makecharacter to make one.");return;}
+				let weapon_name = getName(args,0).toLowerCase();
+				let weapon;
+				for (var i in char.inventory)
+				{
+					if (char.inventory[i] == weapon_name)
+					{
+						char.inventory.splice(i,1);
+						if (char.weapon == weapon_name)
+						{
+							char.weapon = 'rock';
+						}
+						for (var l in data.weapons)
+						{
+							if (data.weapons[l].name == weapon_name)
+							{
+								weapon = data.weapons[l];
+							}
+						}
+						for (i=0;i<Math.floor(weapon.cost/2);i++)
+						{
+							char.inventory.push("weapon part");
+						}
+						currentChannel.send("You scrapped "+weapon_name+" and "+Math.ceil(weapon.cost/2)+" weapon parts were added to your inventory!");
+						
+						break;
+					}
+				}
+				
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
+			}
+		},
+		
+		{
+			name	:	"upgrade",
+			desc	:	"Upgrade a weapon/peice of armour(fight command).",
+			args	:	1,
+			reqmsg	:	true,
+			execute :	function(args,msg)
+			{
+				args.shift();
+				if (!args[0]){return;}
+				let char;
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == msg.author.id)
+					{
+						char = data.fightchars[i];
+						break;
+					}
+				}					
+				if (!char){currentChannel.send("You do not have a character! type "+settings.prefix+"makecharacter to make one.");return;}
+				let weapon_name = getName(args,0).toLowerCase();
+				let weapon;
+				for (var i in char.inventory)
+				{
+					if (char.inventory[i] == weapon_name)
+					{
+						char.inventory.splice(i,1);
+						for (var l in data.weapons)
+						{
+							if (data.weapons[l].name == weapon_name)
+							{
+								weapon = data.weapons[l];
+							}
+						}
+						break;
+					}
+				}
+				
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
 			}
 		}
 		
@@ -663,12 +1285,15 @@ var commandTable =
 				}
 				let Guild = bot.guilds.get(messagelog[logobj].guild);
 				let Channel = bot.channels.get(messagelog[logobj].channel);
-				console.log(messagelog[logobj]);
+				//console.log(messagelog[logobj]);
 				
 				var day = new Date().getDate();
-				var month = new Date().getMonth();
+				var month = new Date().getMonth()+1;
 				var year = new Date().getFullYear();
-				var date = year+"-"+month+"-"+day;
+		fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});		var date = year+"-"+month+"-"+day;
 				
 				if (!fs.existsSync("./Log/"+Guild.name))
 				{
@@ -818,6 +1443,68 @@ clear (number of messages) //Deletes specified amount of messages from channel /
 				
 				msg.author.send("Anonymous messages were toggled.");
 			}
+		},
+		
+		{
+			name	:	"makecharacter",
+			desc	:	"Creates a character(for fight command) if you don't already have one.",
+			reqmsg	:	true,
+			execute	:	function(msg)
+			{
+				data.fightchars.push(newchar(msg.author));
+				msg.channel.send("Made a new character for user: "+msg.author.username);
+				
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
+			}
+		},
+		
+		{
+			name	:	"inventory",
+			desc	:	"DMs you your inventory.",
+			reqmsg	:	true,
+			execute :	function(msg)
+			{
+				let char;
+				for (var i in data.fightchars)
+				{
+					if (data.fightchars[i].user == msg.author.id)
+					{
+						char = data.fightchars[i];
+						break;
+					}
+				}
+				if (!char){currentChannel.send("You do not have a character! type "+settings.prefix+"makecharacter to make one.");return;}
+				let inv = char.inventory.sort();
+				let results = [];
+				let cur_item;
+				let pos = -1;
+				for (i=0;i<char.inventory.length;i++)
+				{
+					if (char.inventory[i] != char.inventory[i-1])
+					{
+						pos+=1;
+						results.push({item:char.inventory[i],amount:1});
+					}
+					else
+					{
+						results[pos].amount += 1;
+					}
+				}
+				let invstring = '';
+				for (var l=0;l<results.length;l++)
+				{
+					invstring+=results[l].item+"(x"+results[l].amount+"),\n"
+				}
+				msg.author.send("This is your inventory:\n"+invstring);
+				char.invsorted = results;
+				fs.writeFileSync('./data.json', JSON.stringify(data, null, 4), function (err) 
+				{
+					if (err) return console.log(err);
+				});
+			}
 		}
 		
 	],
@@ -837,15 +1524,127 @@ clear (number of messages) //Deletes specified amount of messages from channel /
 }
 function mentiontouser(mention)
 {
-	let userid = mention.split('');
-	userid.shift();
-	userid.shift();
-	userid.pop();
-	if (bot.users.get(userid.toString().replace(/,/g,"")) !== undefined)
+	let str = mention;
+	if (bot.users.get(str.replace(/\D/g,'')) !== undefined)
 	{
-		return bot.users.get(userid.toString().replace(/,/g,""));
+		return bot.users.get(str.replace(/\D/g,''));
 	}
 		return 'unknown';
+}
+
+
+
+function randchar(char)
+{
+	let level = char.level+Math.floor(char.exp/20);
+	let armour = getRandomInt(0,data.armour.length);
+	if (level<5)
+	{
+		for (i=0;i<8;i++)
+		{
+			if (data.armour[armour].defense > 0.2)
+			{
+				armour = getRandomInt(0,data.armour.length);
+			}
+		}
+	}
+	if (level>5 && level<15)
+	{
+		for (i=0;i<6;i++)
+		{
+			if (data.armour[armour].defense > 0.5)
+			{
+				armour = getRandomInt(0,data.armour.length);
+			}
+		}
+	}
+	if (level>10)
+	{
+		for (i=0;i<7;i++)
+		{
+			if (data.armour[armour].defense < 0.5)
+			{
+				armour = getRandomInt(0,data.armour.length);
+			}
+		}
+	}
+	let weapon = getRandomInt(0,data.weapons.length);
+	let weapon1;
+	for (var i in data.weapons)
+	{
+		if (data.weapons[i].name == char.weapon)
+		{
+			weapon1 = data.weapons[i];
+		}
+	}
+	if (weapon1.damage[1]<30)
+	{
+		for (i=0;i<7;i++)
+		{
+			if (data.weapons[weapon].damage[0] > 5)
+			{
+				weapon = getRandomInt(0,data.weapons.length);
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+	if (weapon1.damage[1]>50 && weapon1.damage[1]<100)
+	{
+		for (i=0;i<5;i++)
+		{
+			if (data.weapons[weapon].damage[0] < 50)
+			{
+				weapon = getRandomInt(0,data.weapons.length);
+			}
+		}
+	}
+	if (weapon1.damage[0]>60)
+	{
+		for (i=0;i<8;i++)
+		{
+			if (data.weapons[weapon].damage[1] < 100)
+			{
+				weapon = getRandomInt(0,data.weapons.length);
+			}
+		}
+	}
+	
+	let enemy =	
+	{
+		user	:	"ai",
+		level	:	level,
+		str	:	level-getRandomInt(-2,level),
+		def	:	level-getRandomInt(-2,level),
+		hp	:	100,
+		armour:	data.armour[armour].name,
+		weapon:	data.weapons[weapon].name,
+		inventory :	[],
+		losses	:	0,
+		victories:	0,
+	}
+	return enemy;
+}
+
+function newchar(user)
+{
+	let char =
+	{
+		user	:	user.id,
+		exp	:	0,
+		level	:	1,
+		str	:	1,
+		def	:	1,
+		hp	:	100,
+		armour:	"nothing",
+		weapon:	"rock",
+		inventory :	["rock"],
+		victories :	0,
+		losses	:	0
+	}
+	return char;
 }
 
 function secondstominutes(seconds)
@@ -952,30 +1751,30 @@ function checkCommand (com,msg)
 	
 	if (com != joinString(msg.content.split(' ')[0]))
 	{
-		console.log('not command '+com);
-		console.log('tested against: '+maCommandIs(msg)[0]);
+		//console.log('not command '+com);
+		//console.log('tested against: '+maCommandIs(msg)[0]);
 		return;
 	}
 	
-	console.log('is command: '+mcom);
+	//console.log('is command: '+mcom);
 	//console.log(branch);
 	
 	for (i=0;i<branch.length;i++)
 	{
 		if (branch[i].name.toLowerCase() == mcom)
 		{
-			console.log('found command');
+			//console.log('found command');
 			if (branch[i].reqmsg == true && branch == commandTable.complex)
 			{	
-				console.log("complex command");
-				console.log(msg.content.split(' '));
+				//console.log("complex command");
+				//console.log(msg.content.split(' '));
 				branch[i].execute(msg.content.split(' '), msg);
 				
 			}
 			else if (branch[i].reqmsg == true && branch == commandTable.basic)
 			{
 				branch[i].execute(msg);
-				console.log('basic command');
+				//console.log('basic command');
 				
 			} 
 			else if (branch[i].reqmsg == true && branch == commandTable.chat)
@@ -1307,7 +2106,7 @@ bot.on('guildMemberRemove', (member) =>
 	var time = new Date().getTime();
 	var date = new Date(time);
 	
-	messagelog.push([member.user.id, member.user.username, date.toString(), 'left server!']);
+	//messagelog.push([member.user.id, member.user.username, date.toString(), 'left server!']);
 });
 
 bot.on('message', (message) => 
@@ -1348,8 +2147,6 @@ bot.on('message', (message) =>
 				logexists[2] = i;
 			}
 		}
-		
-		
 	}
 	if (logexists[0] == true && logexists[1] == true)
 	{
@@ -1410,12 +2207,23 @@ bot.on('message', (message) =>
 	checkCommand(prefix+'replace',message);
 	checkCommand(prefix+'addquote',message);
 	checkCommand(prefix+'showlog',message);
+	checkCommand(prefix+'serverquote',message);
+	checkCommand(prefix+'addserverquote',message);
+	checkCommand(prefix+'fight',message);
+	checkCommand(prefix+'showchar',message);
+	checkCommand(prefix+'makecharacter',message);
+	checkCommand(prefix+'inventory',message);
+	checkCommand(prefix+'equip',message);
+	checkCommand(prefix+'levelup',message);
+	checkCommand(prefix+'make',message);
+	checkCommand(prefix+'scrap',message);
+	checkCommand(prefix+'upgrade',message);
 	
 	for (var i in messagelog)
 	{
 		if (messagelog[i].size > settings.logperiod)
 		{
-			console.log("Automatically logging messages...");
+			//console.log("Automatically logging messages...");
 			commandTable.basic[2].execute(message,i);
 		}
 	}
@@ -1436,7 +2244,7 @@ bot.on('message', (message) =>
 		
 		for (var n in data.alts)
 		{
-			console.log(data.alts[n]+","+message.content.split(' ')[1].toLowerCase());
+			//console.log(data.alts[n]+","+message.content.split(' ')[1].toLowerCase());
 			
 			if (message.content.split(' ')[1].toLowerCase() == data.alts[n])
 			{
@@ -1446,6 +2254,4 @@ bot.on('message', (message) =>
 	}
 	
 });
-
-
 bot.login('');
